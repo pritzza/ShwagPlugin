@@ -1,66 +1,59 @@
 package me.pritzza.swagplugin.Items;
 
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.Random;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemEvents implements Listener {
-
-    static private Random rng = new Random();
 
     @EventHandler
     public void onUse(PlayerInteractEvent event)
     {
-        if (event.getItem() != null &&
-                event.getItem().getItemMeta().equals( ItemManager.getGun().getItemMeta() ))
-        {
-            Player player = event.getPlayer();
+        ItemStack item = event.getItem();
 
-            ArrayList<Arrow> projectiles = new ArrayList<Arrow>();
+        if (item == null)
+            return;
+        else if (item.getItemMeta().equals( ItemManager.getGun().getItemMeta() ))
+            Gun.useGun(event);
+    }
 
-            final boolean lClick= event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK);
+    // for timebow
+    @EventHandler
+    public void onPlayerLogin(PlayerLoginEvent event)
+    {
+        TimeBow.addUser(event.getPlayer());
+    }
 
-            int numProj;
+    // for timebow
+    @EventHandler
+    public void onPlayerLogout(PlayerQuitEvent event)
+    {
+        TimeBow.removeUser(event.getPlayer());
+    }
 
-            if (lClick) {
-                final int minNumProjectiles = 7;
-                final int numRangeProjectiles = 3;
+    // for timebow
+    @EventHandler
+    public void onShoot(EntityShootBowEvent event)
+    {
+        ItemStack item = event.getBow();
 
-                numProj = minNumProjectiles + rng.nextInt(numRangeProjectiles);
-            }
-            else
-                numProj = 1;
+        if (item == null || !(event.getEntity() instanceof Player) )
+            return;
+        else if (item.getItemMeta().equals( ItemManager.getTimeBow().getItemMeta() ))
+            TimeBow.useTimeBow( (Player) event.getEntity(), (Arrow) event.getProjectile());
+    }
 
-            for(int i = 0; i < numProj; ++i)
-                projectiles.add(player.launchProjectile(Arrow.class));
-                //projectiles.add(player.getWorld().spawnEntity(player.getLocation(), EntityType.COD));
-
-            Vector vel = new Vector();
-            final int power = 7;
-
-            Vector offset = new Vector();
-            final float spread = 0.3f;
-
-            for (Entity proj : projectiles)
-            {
-                if (lClick) {
-                    offset.setX((rng.nextFloat() - 0.5f) * spread);
-                    offset.setY((rng.nextFloat() - 0.5f) * spread);
-                    offset.setZ((rng.nextFloat() - 0.5f) * spread);
-                }
-                vel = player.getLocation().getDirection();
-
-                vel.add(offset);
-                vel.multiply(5);
-
-                proj.setVelocity(vel);
-            }
-        }
+    // for timebow
+    @EventHandler
+    public void onArrowHit(ProjectileHitEvent event)
+    {
+        TimeBow.hit(event);
     }
 }

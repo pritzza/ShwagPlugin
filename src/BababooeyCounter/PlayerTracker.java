@@ -12,10 +12,21 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerTracker implements Listener {
 
+    public static ArrayList<Integer> removeDupes(final ArrayList<Integer> arr)
+    {
+        ArrayList<Integer> dupeless = new ArrayList<Integer>();
+
+        for (int num : arr)
+            if (!dupeless.contains(num))
+                dupeless.add(num);
+
+        return dupeless;
+    }
     static final String PLAYER_TRACKER_FILENAME = "playerCounter.txt";
     static final int PLAYER_NAME_COL = 0;
     static final int PLAYER_COUNT_COL = 1;

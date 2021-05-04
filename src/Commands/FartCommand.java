@@ -17,6 +17,9 @@ public class FartCommand implements CommandExecutor{
     private void fart(final Player player)
     {
         player.sendMessage(ChatColor.GREEN + "*fart*");
+
+        player.setFoodLevel(0);
+        player.setSaturation(0);
     }
 
     @Override

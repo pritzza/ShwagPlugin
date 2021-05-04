@@ -3,13 +3,12 @@ package me.pritzza.swagplugin.Items;
 import me.pritzza.swagplugin.Main;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
 
 public class ChickenSandwich {
 
@@ -20,10 +19,10 @@ public class ChickenSandwich {
 
     private void makeChickenSandwich()
     {
-        this.item = new ItemStack(Material.COOKED_CHICKEN, 1);
+        this.item = new ItemStack(Material.COOKED_CHICKEN);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("Chicken Sandwich");
+        meta.setDisplayName(ChatColor.RESET + "Chicken Sandwich");
 
         item.setItemMeta(meta);
     }

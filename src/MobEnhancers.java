@@ -20,9 +20,12 @@ public class MobEnhancers implements Listener {
         zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ZOMBIE_NEW_HEALTH);
         zombie.setHealth(ZOMBIE_NEW_HEALTH);
 
+        zombie.setGlowing(true);
 
+        zombie.setInvisible(true);
 
         zombie.setCanBreakDoors(true);
+
 
         ItemStack item = new ItemStack(Material.PUFFERFISH);
 

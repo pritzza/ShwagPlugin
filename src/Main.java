@@ -3,6 +3,7 @@ package me.pritzza.swagplugin;
 import me.pritzza.swagplugin.Commands.FartCommand;
 import me.pritzza.swagplugin.Commands.GunCommand;
 import me.pritzza.swagplugin.Commands.JewishSpaceLaserCommand;
+import me.pritzza.swagplugin.CustomMobs.CustomMobManager;
 import me.pritzza.swagplugin.Items.ItemEvents;
 import me.pritzza.swagplugin.Items.ItemManager;
 import me.pritzza.swagplugin.BababooeyCounter.PlayerTracker;
@@ -13,6 +14,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        getServer().getPluginManager().registerEvents(new CustomDeathMessages(), this);
+
+        getServer().getPluginManager().registerEvents(new CustomMobManager(), this);
 
         getServer().getPluginCommand("fireJewishSpaceLaser").setExecutor(new JewishSpaceLaserCommand(this));
 

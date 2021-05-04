@@ -66,6 +66,9 @@ public class FoodBuffs implements Listener {
             case CARROT:
                 foodEffects.add(makePotionEffect(PotionEffectType.NIGHT_VISION, 30, 5, 0, 100));
                 break;
+            case SPIDER_EYE:
+                foodEffects.add(makePotionEffect(PotionEffectType.CONFUSION, 30, 5, -1, 100));
+                break;
         }
 
         for (PotionEffect foodEffect : foodEffects)
